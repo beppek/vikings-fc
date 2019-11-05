@@ -35,6 +35,11 @@ export const query = graphql`
 `
 const ArticlePage = ({ data }) => {
   console.log("data", data)
+  if (
+    !data.prismic.allArticles.edges ||
+    data.prismic.allArticles.edges.length < 1
+  )
+    return null
   const article = data.prismic.allArticles.edges[0].node
   return (
     <Layout>

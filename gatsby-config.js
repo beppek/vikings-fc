@@ -41,8 +41,8 @@ module.exports = {
         pages: [
           {
             type: "Article",
-            match: `news/:uid`,
-            path: `news/preview`,
+            match: `/news/:uid`,
+            path: `/previews/news`,
             component: require.resolve("./src/templates/ArticlePage.jsx"),
           },
         ],
