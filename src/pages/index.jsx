@@ -10,98 +10,86 @@ import Hero from "../components/Hero"
 
 export const query = graphql`
   query AllHomepages {
-    prismic {
-      allHomepages {
-        edges {
-          node {
-            body {
-              ... on PRISMIC_HomepageBodyRich_text {
-                type
-                label
-                fields {
-                  image
-                  imageSharp {
-                    childImageSharp {
-                      fluid(maxWidth: 600) {
-                        ...GatsbyImageSharpFluid_withWebp_tracedSVG
-                      }
-                    }
-                  }
-                  text_content
-                }
-                primary {
-                  section_heading
-                }
-              }
-              ... on PRISMIC_HomepageBodyImage {
-                type
-                label
-                fields {
-                  gallery_image
-                  gallery_imageSharp {
-                    childImageSharp {
-                      fluid(maxWidth: 600) {
-                        ...GatsbyImageSharpFluid_withWebp_tracedSVG
-                      }
-                    }
-                  }
-                }
-                primary {
-                  gallery_title
-                }
-              }
-              ... on PRISMIC_HomepageBodyMap {
-                type
-                label
-                fields {
-                  location
-                }
-                primary {
-                  section_heading: section_heading_map
-                }
-              }
-              ... on PRISMIC_HomepageBodyBlog_posts {
-                type
-                label
-                fields {
-                  blog_posts {
-                    ... on PRISMIC_Article {
-                      title
-                      hero_image
-                      hero_imageSharp {
-                        childImageSharp {
-                          fluid(maxWidth: 600) {
-                            ...GatsbyImageSharpFluid_withWebp_tracedSVG
-                          }
-                        }
-                      }
-                      _linkType
-                      _meta {
-                        uid
-                        tags
-                        lastPublicationDate
-                        firstPublicationDate
-                      }
-                      content
-                    }
-                    _linkType
-                  }
-                }
-                primary {
-                  title1
-                }
+    homepage: prismicHomepage(type: { eq: "homepage" }) {
+      data {
+        body {
+          ... on PrismicHomepageBodyMap {
+            id
+            items {
+              location {
+                latitude
+                longitude
               }
             }
-            hero_image
-            hero_imageSharp {
-              childImageSharp {
-                fluid(maxWidth: 1200) {
-                  ...GatsbyImageSharpFluid_withWebp_tracedSVG
-                }
+            primary {
+              section_heading {
+                html
+                text
               }
             }
-            title
+            slice_type
           }
+          ... on PrismicHomepageBodyVideo {
+            id
+            slice_type
+            primary {
+              section_heading {
+                html
+                text
+              }
+            }
+            items {
+              embedded {
+                html
+              }
+            }
+          }
+
+          ... on PrismicHomepageBodyRichText {
+            id
+            items {
+              image {
+                alt
+                localFile {
+                  childImageSharp {
+                    fluid(maxWidth: 700) {
+                      ...GatsbyImageSharpFluid_withWebp_tracedSVG
+                    }
+                  }
+                }
+                copyright
+              }
+              text_content {
+                html
+              }
+            }
+            slice_type
+            slice_label
+            primary {
+              section_heading {
+                html
+                text
+              }
+            }
+          }
+        }
+        hero_image {
+          alt
+          localFile {
+            childImageSharp {
+              fluid(maxWidth: 1200) {
+                ...GatsbyImageSharpFluid_withWebp_tracedSVG
+              }
+            }
+          }
+        }
+        subheading {
+          html
+          text
+        }
+        title {
+          html
+          text
         }
       }
     }
@@ -109,17 +97,12 @@ export const query = graphql`
 `
 
 const IndexPage = ({ data }) => {
-  const homepage = data.prismic.allHomepages.edges[0].node
-  const homepageBody = homepage.body
-  console.log("homepageBody", homepageBody)
+  const { homepage } = data
+  const homepageBody = homepage.data.body
   return (
     <Layout>
       <SEO title="Home" />
-      <Hero
-        title={homepage.title}
-        image={homepage.hero_image}
-        imageSharp={homepage.hero_imageSharp.childImageSharp}
-      />
+      <Hero title={homepage.data.title.text} image={homepage.data.hero_image} />
       <Container fluid>
         {homepageBody.map(section => (
           <Section key={shortid.generate()} content={section} />

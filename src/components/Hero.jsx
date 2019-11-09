@@ -36,16 +36,18 @@ const StyledBackgroundImage = styled(BackgroundImage)`
   background-size: cover;
 `
 
-const Hero = ({ title, imageSharp, image }) => {
+const Hero = ({ title, image }) => {
   return (
     <StyledBackgroundImage
       Tag="section"
       alt={image.alt}
-      fluid={imageSharp.fluid}
+      fluid={image.localFile.childImageSharp.fluid}
       backgroundColor={theme.black}
     >
       <BackgroundFilter />
-      <TextWrapper>{RichText.render(title)}</TextWrapper>
+      <TextWrapper>
+        <h2>{title}</h2>
+      </TextWrapper>
     </StyledBackgroundImage>
   )
 }

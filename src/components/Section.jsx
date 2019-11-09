@@ -8,38 +8,48 @@ import Row from "./Styled/Row"
 import { TransformLeft, HeadingWrapper } from "./Styled/Wrappers"
 
 import Map from "./Map"
+import Video from "./Video"
 
 const Section = ({ content }) => {
   return (
-    <Row spaceBetween={content.type !== "map"} full>
+    <Row spaceBetween={content.slice_type !== "map"} full>
       <Col>
         <HeadingWrapper>
-          {RichText.render(content.primary.section_heading)}
+          <div
+            dangerouslySetInnerHTML={{
+              __html: content.primary.section_heading.html,
+            }}
+          />
         </HeadingWrapper>
-        {content.fields.map(field => {
-          const image = field.image ? (
-            field.imageSharp.childImageSharp ? (
+        {content.items.map(item => {
+          const image = item.image ? (
+            item.image.localFile ? (
               <Img
-                alt={field.image.alt}
-                fluid={field.imageSharp.childImageSharp.fluid}
+                alt={item.image.alt}
+                fluid={item.image.localFile.childImageSharp.fluid}
               />
             ) : (
-              <img alt={field.image.alt} src={field.image.url} />
+              <img alt={item.image.alt} src={item.image.url} />
             )
           ) : null
-          const sectionContent =
-            content.type === "map" ? (
-              <Map
-                lng={field.location.longitude}
-                lat={field.location.latitude}
-              />
-            ) : (
-              RichText.render(field.text_content)
+          let sectionContent = null
+          if (content.slice_type === "map") {
+            sectionContent = (
+              <Map lng={item.location.longitude} lat={item.location.latitude} />
             )
+          } else if (content.slice_type === "video") {
+            sectionContent = <Video embedded={item.embedded} />
+          } else {
+            sectionContent = (
+              <div
+                dangerouslySetInnerHTML={{ __html: item.text_content.html }}
+              />
+            )
+          }
           return (
             <Row
-              full={content.type === "map"}
-              spaceBetween={content.type !== "map"}
+              full={content.slice_type === "map"}
+              spaceBetween={content.slice_type !== "map"}
               key={shortid.generate()}
             >
               {image && (

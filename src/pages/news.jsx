@@ -7,27 +7,29 @@ import ArticleList from "../components/ArticleList"
 
 export const query = graphql`
   query ArticlesQuery {
-    prismic {
-      allArticles {
-        edges {
-          node {
-            content
-            _meta {
-              uid
-              tags
-              firstPublicationDate
-              lastPublicationDate
-            }
-            hero_image
-            hero_imageSharp {
-              childImageSharp {
-                fluid(maxWidth: 300) {
-                  ...GatsbyImageSharpFluid_withWebp_tracedSVG
+    articles: allPrismicArticle {
+      edges {
+        node {
+          data {
+            hero_image {
+              alt
+              copyright
+              localFile {
+                childImageSharp {
+                  fluid(maxWidth: 500) {
+                    ...GatsbyImageSharpFluid_withWebp_tracedSVG
+                  }
                 }
               }
             }
-            title
+            title {
+              text
+            }
           }
+          first_publication_date
+          last_publication_date
+          type
+          uid
         }
       }
     }
@@ -35,7 +37,7 @@ export const query = graphql`
 `
 
 const NewsPage = ({ data }) => {
-  const articles = data.prismic.allArticles.edges.map(edge => ({
+  const articles = data.articles.edges.map(edge => ({
     ...edge.node,
   }))
   console.log("articles", articles)

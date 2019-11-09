@@ -5,12 +5,12 @@ import { Link } from "gatsby"
 
 const ArticleList = ({ articles }) => {
   const articleList = articles.map(article => (
-    <div key={article._meta.uid}>
-      <Link to={`/news/${article._meta.uid}`}>
-        {RichText.render(article.title)}
+    <div key={article.uid}>
+      <Link to={`/news/${article.uid}`}>
+        {RichText.render(article.data.title)}
         <Img
-          alt={article.hero_image.alt}
-          fluid={article.hero_imageSharp.childImageSharp.fluid}
+          alt={article.data.hero_image.alt}
+          fluid={article.data.hero_image.localFile.childImageSharp.fluid}
         />
       </Link>
     </div>

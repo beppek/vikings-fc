@@ -30,22 +30,17 @@ module.exports = {
       },
     },
     {
-      resolve: "gatsby-source-prismic-graphql",
+      resolve: "gatsby-source-prismic",
       options: {
         repositoryName: "vikingswebsite",
         accessToken:
-          "MC5YYno3OUJFQUFDQUFsSnlI.77-977-9B--_vTsSS--_vXzvv710ThNZ77-977-9Bu-_ve-_ve-_ve-_vV3vv71o77-9C--_ve-_vRsFOmw", // (optional API access token)
-        path: "/preview", // (optional preview path. Default: /preview)
-        previews: true, // (optional, activated Previews. Default: false)
-        linkResolver,
-        pages: [
-          {
-            type: "Article",
-            match: `/news/:uid`,
-            path: `/previews/news`,
-            component: require.resolve("./src/templates/ArticlePage.jsx"),
-          },
-        ],
+          "MC5YYno3OUJFQUFDQUFsSnlI.77-977-9B--_vTsSS--_vXzvv710ThNZ77-977-9Bu-_ve-_ve-_ve-_vV3vv71o77-9C--_ve-_vRsFOmw",
+        linkResolver: () => linkResolver,
+        lang: "en-au",
+        // schemas: {
+        //   homepage: require("./src/schemas/homepage.json"),
+        //   article: require("./src/schemas/article.json"),
+        // },
       },
     },
     // this (optional) plugin enables Progressive Web App + Offline functionality
