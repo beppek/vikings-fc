@@ -1,0 +1,181 @@
+{
+  "Main": {
+    "title": {
+      "type": "StructuredText",
+      "config": {
+        "single": "heading2, heading3, heading4, heading5, heading6",
+        "label": "Title"
+      }
+    },
+    "subheading": {
+      "type": "StructuredText",
+      "config": {
+        "single": "heading3, heading4, heading5, heading6",
+        "label": "Subtitle"
+      }
+    },
+    "hero_image": {
+      "type": "Image",
+      "config": {
+        "constraint": {},
+        "thumbnails": [],
+        "label": "Hero Image"
+      }
+    },
+    "body": {
+      "type": "Slices",
+      "fieldset": "Slice zone",
+      "config": {
+        "labels": {
+          "rich_text": [
+            {
+              "name": "image_left",
+              "display": "image left"
+            },
+            {
+              "name": "image_right",
+              "display": "image right"
+            },
+            {
+              "name": "image_top",
+              "display": "image top"
+            },
+            {
+              "name": "image_bottom",
+              "display": "image bottom"
+            }
+          ],
+          "image": [
+            {
+              "name": "image_gallery_grid",
+              "display": "image gallery grid"
+            }
+          ],
+          "map": [
+            {
+              "name": "map",
+              "display": "map"
+            }
+          ],
+          "blog_posts": [
+            {
+              "name": "blog_posts",
+              "display": "blog posts"
+            }
+          ]
+        },
+        "choices": {
+          "rich_text": {
+            "type": "Slice",
+            "fieldset": "Content Section",
+            "description": "Text content section",
+            "icon": "text_fields",
+            "display": "list",
+            "non-repeat": {
+              "section_heading": {
+                "type": "StructuredText",
+                "config": {
+                  "single": "heading2, heading3, heading4, heading5, heading6",
+                  "label": "Section Heading"
+                }
+              }
+            },
+            "repeat": {
+              "image": {
+                "type": "Image",
+                "config": {
+                  "constraint": {},
+                  "thumbnails": [],
+                  "label": "Image"
+                }
+              },
+              "text_content": {
+                "type": "StructuredText",
+                "config": {
+                  "multi": "paragraph, preformatted, heading3, heading4, heading5, heading6, strong, em, hyperlink, image, embed, list-item, o-list-item, o-list-item",
+                  "label": "Text Content"
+                }
+              }
+            }
+          },
+          "image": {
+            "type": "Slice",
+            "fieldset": "Image Gallery Grid",
+            "description": "Image Gallery Grid",
+            "icon": "collections",
+            "display": "grid",
+            "non-repeat": {
+              "gallery_title": {
+                "type": "StructuredText",
+                "config": {
+                  "single": "heading2, heading3, heading4, heading5, heading6",
+                  "label": "Gallery Title"
+                }
+              }
+            },
+            "repeat": {
+              "gallery_image": {
+                "type": "Image",
+                "config": {
+                  "constraint": {},
+                  "thumbnails": [],
+                  "label": "Gallery Image"
+                }
+              }
+            }
+          },
+          "map": {
+            "type": "Slice",
+            "fieldset": "Map",
+            "description": "Google map",
+            "icon": "location_on",
+            "display": "list",
+            "non-repeat": {
+              "section_heading_map": {
+                "type": "StructuredText",
+                "config": {
+                  "single": "heading2, heading3, heading4, heading5, heading6",
+                  "label": "Section heading"
+                }
+              }
+            },
+            "repeat": {
+              "location": {
+                "type": "GeoPoint",
+                "config": {
+                  "label": "Location"
+                }
+              }
+            }
+          },
+          "blog_posts": {
+            "type": "Slice",
+            "fieldset": "Blog posts",
+            "description": "Curated blog posts",
+            "icon": "collections_bookmark",
+            "display": "list",
+            "non-repeat": {
+              "title1": {
+                "type": "StructuredText",
+                "config": {
+                  "single": "heading2, heading3, heading4, heading5, heading6",
+                  "label": "Title"
+                }
+              }
+            },
+            "repeat": {
+              "blog_posts": {
+                "type": "Link",
+                "config": {
+                  "select": "document",
+                  "customtypes": ["article"],
+                  "label": "Blog posts"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
